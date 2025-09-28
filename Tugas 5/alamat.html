@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pencari Kode Pos Otomatis (Lengkap)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        .label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+            color: #333;
+        }
+        #kodepos_result {
+            margin-top: 25px;
+            padding: 15px;
+            border: 2px solid #007bff;
+            background-color: #e9f5ff;
+            border-radius: 6px;
+        }
+        #kodepos_result h3 {
+            margin-top: 0;
+            color: #007bff;
+            text-align: center;
+        }
+        #kodepos_result p {
+            margin: 5px 0;
+        }
+        #kodepos_value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #28a745;
+            text-align: center;
+            display: block;
+            margin-top: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+        .region-info {
+            font-size: 0.9em;
+            color: #555;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+        .region-info strong {
+            font-weight: 700;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Cari Kode Pos Indonesia</h1>
+    <p>Pilih alamat secara berurutan untuk mendapatkan Kode Pos.</p>
+
+    <label class="label" for="provinsi">Pilih Provinsi:</label>
+    <select id="provinsi" onchange="loadCities()">
+        <option value="">Memuat Provinsi...</option>
+    </select>
+
+    <div id="kabkota-group" class="hidden">
+        <label class="label" for="kabkota">Pilih Kabupaten/Kota:</label>
+        <select id="kabkota" onchange="loadDistricts()">
+            <option value="">Pilih Kabupaten/Kota</option>
+        </select>
+    </div>
+
+    <div id="kecamatan-group" class="hidden">
+        <label class="label" for="kecamatan">Pilih Kecamatan:</label>
+        <select id="kecamatan" onchange="getPostalCode()">
+            <option value="">Pilih Kecamatan</option>
+        </select>
+    </div>
+
+    <div id="kodepos_result" class="hidden">
+        <h3>Informasi Alamat dan Kode Pos</h3>
+        <div class="region-info">
+            <p><strong>Provinsi:</strong> <span id="display_provinsi"></span></p>
+            <p><strong>Kabupaten/Kota:</strong> <span id="display_kabkota"></span></p>
+            <p><strong>Kecamatan:</strong> <span id="display_kecamatan"></span></p>
+        </div>
+        <div style="border-top: 1px solid #ccc; padding-top: 10px;">
+            <strong>KODE POS:</strong>
+            <span id="kodepos_value">...</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    const BASE_URL = 'https://alamat.thecloudalert.com/api/';
+    
+    let selectedKabKotaId = '';
+    
+    let selectedNames = {
+        provinsi: '',
+        kabkota: '',
+        kecamatan: ''
+    };
+
+    async function fetchData(endpoint) {
+        try {
+            const response = await fetch(BASE_URL + endpoint);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json();
+            
+            if (data.status === 200 && data.result) {
+                return data.result;
+            } else {
+                console.error("Gagal mengambil data:", data.message);
+                return [];
+            }
+        } catch (error) {
+            console.error("Kesalahan Fetch:", error);
+            document.getElementById('provinsi').innerHTML = '<option value="">-- Gagal memuat data --</option>';
+            return [];
+        }
+    }
+
+    function populateSelect(selectElement, data, defaultText) {
+        selectElement.innerHTML = `<option value="">${defaultText}</option>`;
+        if (data.length > 0) {
+            data.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.id;
+                option.textContent = item.text;
+                selectElement.appendChild(option);
+            });
+        }
+    }
+
+    async function loadProvinces() {
+        const provinsiSelect = document.getElementById('provinsi');
+        const provinces = await fetchData('provinsi/get/');
+        populateSelect(provinsiSelect, provinces, 'Pilih Provinsi');
+    }
+
+    async function loadCities() {
+        const provinsiSelect = document.getElementById('provinsi');
+        const provinsiId = provinsiSelect.value;
+        const kabkotaSelect = document.getElementById('kabkota');
+        const kabkotaGroup = document.getElementById('kabkota-group');
+
+        selectedNames.provinsi = provinsiSelect.options[provinsiSelect.selectedIndex].text;
+
+        kabkotaSelect.innerHTML = '<option value="">Pilih Kabupaten/Kota</option>';
+        document.getElementById('kecamatan').innerHTML = '<option value="">Pilih Kecamatan</option>';
+        document.getElementById('kecamatan-group').classList.add('hidden');
+        document.getElementById('kodepos_result').classList.add('hidden');
+        kabkotaGroup.classList.add('hidden');
+        selectedKabKotaId = '';
+        selectedNames.kabkota = '';
+        selectedNames.kecamatan = '';
+        
+        if (provinsiId) {
+            kabkotaGroup.classList.remove('hidden');
+            const endpoint = `kabkota/get/?d_provinsi_id=${provinsiId}`;
+            const cities = await fetchData(endpoint);
+            populateSelect(kabkotaSelect, cities, 'Pilih Kabupaten/Kota');
+        }
+    }
+
+    async function loadDistricts() {
+        const kabkotaSelect = document.getElementById('kabkota');
+        const kabkotaId = kabkotaSelect.value;
+        const kecamatanSelect = document.getElementById('kecamatan');
+        const kecamatanGroup = document.getElementById('kecamatan-group');
+
+        selectedNames.kabkota = kabkotaSelect.options[kabkotaSelect.selectedIndex].text;
+
+        kecamatanSelect.innerHTML = '<option value="">Pilih Kecamatan</option>';
+        document.getElementById('kodepos_result').classList.add('hidden');
+        kecamatanGroup.classList.add('hidden');
+        selectedKabKotaId = '';
+        selectedNames.kecamatan = '';
+
+        if (kabkotaId) {
+            selectedKabKotaId = kabkotaId; 
+            kecamatanGroup.classList.remove('hidden');
+            const endpoint = `kecamatan/get/?d_kabkota_id=${kabkotaId}`;
+            const districts = await fetchData(endpoint);
+            populateSelect(kecamatanSelect, districts, 'Pilih Kecamatan');
+        }
+    }
+
+    async function getPostalCode() {
+        const kecamatanSelect = document.getElementById('kecamatan');
+        const kecamatanId = kecamatanSelect.value;
+        const kodeposResult = document.getElementById('kodepos_result');
+        const kodeposValue = document.getElementById('kodepos_value');
+        
+        kodeposResult.classList.add('hidden');
+        kodeposValue.textContent = '...';
+
+        if (kecamatanId) {
+            selectedNames.kecamatan = kecamatanSelect.options[kecamatanSelect.selectedIndex].text;
+
+            document.getElementById('display_provinsi').textContent = selectedNames.provinsi;
+            document.getElementById('display_kabkota').textContent = selectedNames.kabkota;
+            document.getElementById('display_kecamatan').textContent = selectedNames.kecamatan;
+
+            const endpoint = `kodepos/get/?d_kabkota_id=${selectedKabKotaId}&d_kecamatan_id=${kecamatanId}`;
+            const zipCodes = await fetchData(endpoint);
+            
+            if (zipCodes.length > 0) {
+                kodeposValue.textContent = zipCodes[0].text;
+            } else {
+                kodeposValue.textContent = "T/A (Tidak Ditemukan)";
+            }
+            kodeposResult.classList.remove('hidden');
+        } else {
+            selectedNames.kecamatan = '';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadProvinces);
+</script>
+
+</body>
+</html>

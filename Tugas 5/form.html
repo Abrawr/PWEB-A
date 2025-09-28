@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<head>
+  <title>Form Registrasi Mahasiswa</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+    input, select, button {
+      width: fit-content;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    button {
+      background: #4CAF50;
+      color: white;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    button:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <form>
+    <h2>Form Registrasi</h2>
+
+    <label for="nama">Nama Mahasiswa</label>
+    <input list="daftarNama" id="nama" name="nama" placeholder="Ketik nama...">
+    <datalist id="daftarNama">
+      <option value="Abrar Maulana">
+      <option value="Ahmad Fauzi">
+      <option value="Budi Santoso">
+      <option value="Citra Dewi">
+      <option value="Dian Saputra">
+      <option value="Eka Pratama">
+    </datalist>
+
+    <label for="nim">NIM</label>
+    <input type="text" id="nim" name="nim" required>
+
+    <label for="matkul">Mata Kuliah</label>
+    <select id="matkul" name="matkul" required>
+      <option value="">Pilih Mata Kuliah</option>
+      <option value="Pemrograman Web">Pemrograman Web</option>
+      <option value="Struktur Data">Struktur Data</option>
+      <option value="Basis Data">Basis Data</option>
+      <option value="Jaringan Komputer">Jaringan Komputer</option>
+    </select>
+
+    <label for="dosen">Dosen</label>
+    <select id="dosen" name="dosen" required>
+      <option value="">Pilih Dosen</option>
+      <option value="Dosen 1">Dosen 1</option>
+      <option value="Dosen 2">Dosen 2</option>
+      <option value="Dosen 3">Dosen 3</option>
+      <option value="Dosen 4">Dosen 4</option>
+      <option value="Dosen 5">Dosen 5</option>
+    </select>
+
+    <button type="submit">Daftar</button>
+  </form>
+</body>
+</html>

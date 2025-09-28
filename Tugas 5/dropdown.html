@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<head>
+  <title>Dropdown dinamis</title>
+</head>
+<body>
+  <h3>Dropdown dinamis</h3>
+
+  <select id="produk">
+    <option value="">Pilih Jenis Produk</option>
+    <option value="desktop">Desktop</option>
+    <option value="laptop">Laptop</option>
+    <option value="smartphone">Smartphone</option>
+  </select>
+
+  <select id="merk">
+    <option value="">Pilih Merk</option>
+  </select>
+
+  <script>
+    const dataMerk = {
+      desktop: ["Dell", "HP", "Asus"],
+      laptop: ["Lenovo", "Acer", "Apple"],
+      smartphone: ["Samsung", "Xiaomi", "iPhone"]
+    };
+
+    const produkSelect = document.getElementById("produk");
+    const merkSelect = document.getElementById("merk");
+
+    produkSelect.addEventListener("change", function() {
+      const produk = this.value;
+      merkSelect.innerHTML = "<option value=''>Pilih Merk</option>";
+
+      if (produk && dataMerk[produk]) {
+        dataMerk[produk].forEach(function(merk) {
+          const option = document.createElement("option");
+          option.value = merk.toLowerCase();
+          option.textContent = merk;
+          merkSelect.appendChild(option);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
