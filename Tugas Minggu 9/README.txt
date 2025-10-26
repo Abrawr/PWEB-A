@@ -1,0 +1,1 @@
+jika menggunakan windows taruh folder di dalam folder htdocs default jika menggunakan xampp maka taruh di xampp -> htdocs
