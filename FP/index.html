@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfinITS Park - Innovation & Collaboration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        techBlue: {
+                            DEFAULT: '#0EA5E9', 
+                            dark: '#0284C7',
+                        },
+                        electricYellow: {
+                            DEFAULT: '#FACC15', 
+                            dark: '#EAB308',
+                        },
+                        darkBg: '#0F172A', 
+                        cardBg: '#1E293B', 
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0F172A;
+            color: #F1F5F9;
+        }
+        
+        .glass-effect {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #0EA5E9, #FACC15);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .map-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            border: 2px solid #0EA5E9;
+        }
+        
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .logo-font {
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: -0.02em;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="fixed w-full z-50 glass-effect transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold logo-font flex items-center gap-2">
+                <i class="fa-solid fa-layer-group text-techBlue"></i> 
+                <span>
+                    <span class="text-techBlue">InfinITS</span> 
+                    <span class="text-electricYellow">Park</span>
+                </span>
+            </a>
+            
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#home" class="hover:text-electricYellow transition-colors text-sm font-semibold tracking-wide">BERANDA</a>
+                <a href="#features" class="hover:text-electricYellow transition-colors text-sm font-semibold tracking-wide">FASILITAS</a>
+                <a href="#space" class="hover:text-electricYellow transition-colors text-sm font-semibold tracking-wide">AREA</a>
+                <a href="#location" class="px-5 py-2 bg-techBlue text-white font-bold rounded-full hover:bg-techBlue-dark transition-all transform hover:scale-105 shadow-lg shadow-sky-500/30">
+                    LOKASI
+                </a>
+            </div>
+
+            <button id="mobile-menu-btn" class="md:hidden text-2xl focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-cardBg border-t border-slate-700">
+            <div class="flex flex-col p-6 space-y-4">
+                <a href="#home" class="hover:text-electricYellow font-semibold">BERANDA</a>
+                <a href="#features" class="hover:text-electricYellow font-semibold">FASILITAS</a>
+                <a href="#space" class="hover:text-electricYellow font-semibold">AREA</a>
+                <a href="#location" class="text-techBlue font-bold">LOKASI KAMI</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="min-h-screen flex items-center justify-center pt-20 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-techBlue rounded-full mix-blend-multiply filter blur-[128px] opacity-20 animate-pulse"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-electricYellow rounded-full mix-blend-multiply filter blur-[128px] opacity-10"></div>
+
+        <div class="container mx-auto px-6 flex flex-col-reverse md:flex-row items-center gap-12 z-10">
+            <div class="w-full md:w-1/2 space-y-6 fade-in-up">
+                <div class="inline-block px-4 py-2 bg-slate-800 border border-slate-700 rounded-full text-xs font-bold tracking-widest text-electricYellow mb-2">
+                    <i class="fa-solid fa-bolt mr-2"></i> 24 HOURS OPEN
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold leading-tight">
+                    Space for <br>
+                    <span class="text-gradient">Limitless Ideas.</span>
+                </h1>
+                <p class="text-slate-400 text-lg max-w-lg">
+                    InfinITS Park hadir sebagai taman olahraga dan bersantai di dalam ITS. Buka 24 jam untuk mendukung kreativitas tanpa batas waktu.
+                </p>
+                <div class="flex gap-4 pt-4">
+                    <a href="#location" class="px-8 py-4 bg-electricYellow text-slate-900 font-bold rounded-lg hover:bg-yellow-400 transition-all shadow-lg shadow-yellow-500/20 flex items-center gap-2">
+                        <span>Kunjungi Kami</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="#features" class="px-8 py-4 border border-slate-600 rounded-lg hover:border-techBlue hover:text-techBlue transition-all">
+                        Fasilitas
+                    </a>
+                </div>
+            </div>
+            
+            <div class="w-full md:w-1/2 flex justify-center fade-in-up delay-200">
+                <div class="relative w-80 h-80 md:w-96 md:h-96">
+                   <div class="absolute inset-0 bg-gradient-to-tr from-techBlue to-transparent rounded-3xl opacity-20 transform rotate-6"></div>
+                   <div class="absolute inset-0 bg-cardBg border border-slate-700 rounded-3xl flex items-center justify-center overflow-hidden shadow-2xl">
+                        <img 
+                            src="taman_infinits.png" 
+                            onerror="this.onerror=null" 
+                            alt="Foto InfinITS Park"
+                            class="w-full h-full object-cover transition-opacity hover:opacity-100"
+                        >
+                   </div>
+                   <div class="absolute -bottom-6 -left-6 bg-cardBg border border-slate-700 p-4 rounded-xl shadow-xl flex items-center gap-3">
+                   </div>
+                </div>
+                   <div class="absolute -bottom-6 -left-6 bg-cardBg border border-slate-700 p-4 rounded-xl shadow-xl flex items-center gap-3">
+                       <div class="w-10 h-10 bg-electricYellow rounded-full flex items-center justify-center text-slate-900 font-bold">
+                           <i class="fa-solid fa-clock"></i>
+                       </div>
+                       <div>
+                           <p class="text-sm text-slate-400">Jam Buka</p>
+                           <p class="font-bold text-white">24 Jam Non-stop</p>
+                       </div>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="py-20 bg-slate-900 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Kenapa <span class="text-techBlue">InfinITS Park?</span></h2>
+                <p class="text-slate-400">Fasilitas lengkap untuk menunjang produktivitas Anda.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-cardBg p-8 rounded-2xl border border-slate-800 hover:border-techBlue transition-all group fade-in-up">
+                    <div class="w-14 h-14 bg-slate-800 rounded-xl flex items-center justify-center mb-6 group-hover:bg-techBlue transition-colors">
+                        <i class="fa-solid fa-wifi text-2xl text-techBlue group-hover:text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">High Speed WiFi</h3>
+                    <p class="text-slate-400 text-sm">Akses internet cepat dan stabil, ideal untuk working, streaming, atau gaming.</p>
+                </div>
+
+                <div class="bg-cardBg p-8 rounded-2xl border border-slate-800 hover:border-electricYellow transition-all group fade-in-up delay-100">
+                    <div class="w-14 h-14 bg-slate-800 rounded-xl flex items-center justify-center mb-6 group-hover:bg-electricYellow transition-colors">
+                        <i class="fa-solid fa-couch text-2xl text-electricYellow group-hover:text-slate-900"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Cozy Space</h3>
+                    <p class="text-slate-400 text-sm">Area indoor dan outdoor yang nyaman dengan suasana yang mendukung fokus.</p>
+                </div>
+
+                <div class="bg-cardBg p-8 rounded-2xl border border-slate-800 hover:border-techBlue transition-all group fade-in-up delay-200">
+                    <div class="w-14 h-14 bg-slate-800 rounded-xl flex items-center justify-center mb-6 group-hover:bg-techBlue transition-colors">
+                        <i class="fa-solid fa-burger text-2xl text-techBlue group-hover:text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Food & Beverage</h3>
+                    <p class="text-slate-400 text-sm">Beragam pilihan makanan dan minuman untuk menemani aktivitas Anda seharian.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="location" class="py-20 relative bg-slate-900 border-t border-slate-800">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row gap-12">
+                
+                <div class="w-full md:w-1/3 space-y-8 fade-in-up">
+                    <div>
+                        <h2 class="text-4xl font-bold mb-4">Lokasi <span class="text-electricYellow">Kami</span></h2>
+                        <p class="text-slate-400">
+                            Datang dan rasakan suasananya secara langsung.
+                        </p>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-map-pin text-techBlue"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white">Alamat</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">
+                                    Jl. Arief Rahman Hakim No.9,<br>
+                                    Keputih, Kec. Sukolilo,<br>
+                                    Surabaya, Jawa Timur 60111
+                                </p>
+                                <a href="https://maps.app.goo.gl/WD2kugWsYSZdpCrN9" target="_blank" class="text-xs text-electricYellow hover:underline mt-2 block">Buka di Google Maps</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-clock text-techBlue"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white">Jam Operasional</h4>
+                                <div class="mt-1 space-y-1">
+                                    <div class="flex justify-between text-sm w-full md:w-48">
+                                        <span class="text-slate-400">Senin - Minggu</span>
+                                        <span class="text-electricYellow font-bold">Buka 24 Jam</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="https://maps.app.goo.gl/WD2kugWsYSZdpCrN9" target="_blank" class="inline-block w-full text-center py-3 border border-techBlue text-techBlue rounded-lg hover:bg-techBlue hover:text-white transition-all font-semibold">
+                        Petunjuk Arah
+                    </a>
+                </div>
+
+                <div class="w-full md:w-2/3 fade-in-up delay-200">
+                    <div class="map-container relative group">
+                        <div class="absolute top-4 right-4 z-10 bg-slate-900 px-3 py-1 rounded text-xs text-white border border-slate-700 opacity-80">
+                            <i class="fa-solid fa-map"></i> Google Maps
+                        </div>
+                        <iframe 
+                            src="https://maps.google.com/maps?q=Jl.+Arief+Rahman+Hakim+No.9,+Keputih,+Kec.+Sukolilo,+Surabaya&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                            width="100%" 
+                            height="100%" 
+                            frameborder="0" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-cardBg py-10 border-t border-slate-800">
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="text-2xl font-bold logo-font tracking-wide mb-4">
+                <span class="text-techBlue">InfinITS</span> <span class="text-electricYellow">Park</span>
+            </h3>
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-techBlue hover:text-white transition-all">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-techBlue hover:text-white transition-all">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-techBlue hover:text-white transition-all">
+                    <i class="fa-solid fa-globe"></i>
+                </a>
+            </div>
+            <p class="text-slate-500 text-sm">
+                &copy; 2023 InfinITS Park. All Rights Reserved. <br>
+                <span class="text-xs">Surabaya, East Java.</span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up').forEach((el) => {
+            observer.observe(el);
+        });
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+                navbar.style.background = 'rgba(15, 23, 42, 0.95)';
+            } else {
+                navbar.classList.remove('shadow-lg');
+                navbar.style.background = 'rgba(30, 41, 59, 0.7)';
+            }
+        });
+    </script>
+</body>
+</html>
