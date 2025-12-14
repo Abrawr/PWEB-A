@@ -97,7 +97,7 @@ if (isset($_POST['delete_account'])) {
     verify_csrf();
     
     // Server-side reCAPTCHA Verification
-    $recaptcha_secret = "6LebMicsAAAAAAigXltXZOCCYsQRBFSfzSuACuss";
+    $recaptcha_secret = "";
     $recaptcha_response = $_POST['g-recaptcha-response'] ?? '';
 
     $verify_url = "https://www.google.com/recaptcha/api/siteverify";
@@ -385,4 +385,5 @@ if (isset($_POST['delete_account'])) {
         });
     </script>
 </body>
+
 </html>
